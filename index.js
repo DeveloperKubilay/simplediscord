@@ -1,3 +1,9 @@
+/**
+ * Version: 1.0.1
+ * Settings added protection strengthened
+ * Developed by kubi
+ */
+
 // Modules
 const express = require("express"),
 bodyParser = require("body-parser"),
@@ -16,6 +22,7 @@ const { kubitdb } = require("kubitdb")
 const db = new kubitdb("database/index")
 const komutlardb = new kubitdb("database/komutlar")
 const tdb = new kubitdb("database/temp")
+const sdb = new kubitdb('settings')
 const settings = require('./settings.json')
 
 //Start
@@ -44,7 +51,7 @@ fs.rmSync(path.join(__dirname,'/bot'), { recursive: true, force: true });
 fs.mkdirSync(path.join(__dirname,'/bot')) 
 fs.mkdirSync(path.join(__dirname,'/bot/komutlar')) 
 exec('cd bot && npm init -y && npm i discord.js kubitdb fs node-os-utils && node . > konsol.txt', (err, stdout, stderr) => {})
-var indexjs = `//Version 1.0.0 | Powerded by kubi
+var indexjs = `//Version ${settings.version} | Powerded by kubi
 const { Client, Intents , Collection,  Util, MessageEmbed, Permissions, MessageActionRow, MessageButton} = require('discord.js');const Discord = require('discord.js');
 const settings = require('../settings.json')
 const {kubitdb} = require('kubitdb')
@@ -132,6 +139,7 @@ fs.writeFileSync('bot/komutlar/'+ismi+'.js',"const { Client, Intents , Collectio
 "\nmodule.exports= (message,client,args,db,channel,role) => {\n"+indexjs+"\n}", err => { })
 if(execc){exec('cd bot && '+execc, function(err, out){})}
 }
+function debugtext(text) {if(text.includes("'") || text.includes(`"`) || text.includes('`')) {return true} else {return false}}
 
 //Oh Express
 app.get('/',(req, res) => {
@@ -208,8 +216,8 @@ icons:settings.fontawesome,
 data:komutlardb.get("komutlar").filter(z=> z.ismi===req.params.komutismi)[0]
 })})
 app.post('/komutlarekle', async (req, res) => {
+if(settings["2ad"]){if(!req.session.user || settings.ownerid != req.session.user.id) return res.redirect("/login")}
 var args=req.body,code,msgynt="message.channel.send({",prefix,terminal=args["terminal"]; 
-function debugtext(text) {if(text.includes("'") || text.includes(`"`) || text.includes('`')) {return true} else {return false}}
 if(!args["terminal"]) terminal = "";var ecode = "new Discord.MessageEmbed()";
 if(!args.ismi || args.ismi ==="" || args.ismi ===" " || debugtext(args.ismi)){return res.redirect("/uyari/Kodun ismini doğru girin")}
 if(args.jskodu && args.jskodu !="" && args.jskodu !=" ") code = code+"///javascript\n"+args.jskodu+"\n///javascript\n"
@@ -241,10 +249,19 @@ addcommad(args.ismi,prefix,code,"npm i "+terminal)
 console.log("🟢 Added a command:"+args.ismi)
 return res.redirect("/uyari/Komut eklendi")
 })
-
-/**
- * Version: 1.0.0
- * (embed,content,terminal,jscode) added
- * Nots: I wanted to open the project to everyone quickly, I shared it early, there is a lot more to be done
- * Developed by kubi
- */
+app.get('/ayarlar', async (req, res) => {
+if(settings["2ad"]){if(!req.session.user || settings.ownerid != req.session.user.id) return res.redirect("/login")}
+res.render("ayarlar.ejs",{icons:settings.fontawesome,settings:sdb.hepsi()})})
+app.post('/ayarlarupdate', async (req, res) => {
+if(settings["2ad"]){if(!req.session.user || settings.ownerid != req.session.user.id) return res.redirect("/login")}
+var args = req.body
+if(args.token && args.token !="" && args.token !=" " && !debugtext(args.token)){
+sdb.set("token",args.token)}
+if(args.websitetoken && args.websitetoken !="" && args.websitetoken !=" " && !debugtext(args.websitetoken)){
+sdb.set("websitetoken",args.websitetoken)}
+if(args.id && args.id !="" && args.id !=" " && !debugtext(args.id) && !isNaN(Number(args.id))){sdb.set("id",Number(args.id))}
+if(args.ownerid && args.ownerid !="" && args.ownerid !=" " && !debugtext(args.ownerid) && !isNaN(Number(args.ownerid))){
+sdb.set("ownerid",Number(args.ownerid))}
+if(args.prefix && args.prefix !="" && args.prefix !=" "){sdb.set("prefix",args.prefix)}
+return res.redirect("/uyari/Ayarlar Güncellendi")
+})

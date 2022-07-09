@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SimpleDiscord - Komutlar</title>
+    <title>SimpleDiscord - Ayarlar</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="/icons/websiteload.png" type="image/x-icon" />
 </head>
@@ -23,62 +23,121 @@
           <a href="/komutekle"><i class="fa-solid fa-file-code"></i> Komut ekle</a>
           <a href="/komutlar"><i class="fa-solid fa-file-lines"></i> Komutlar</a>
           <a href="/ayarlar"><i class="fa-solid fa-gears"></i> Ayarlar</a>
-            <a href="/out"><i class="fa-solid fa-right-from-bracket"></i> Çıkış yap</a>
+          <a href="/out"><i class="fa-solid fa-right-from-bracket"></i> Çıkış yap</a>
         </div>  
-
-<h2><i class="fa-solid fa-code"></i> Komutlar</h2>
-<div class="row">
-    <%
-    for(let i = 0; i < komutlardb.get("komutlar").length; i++) {
-    let komut = komutlardb.get("komutlar")[i];
-  %>      
-  <div class="column">
-    <div class="card">
-      <h3><%= komut.ismi%></h3>
-      <p><i class="fa-solid fa-clock-rotate-left"></i> Tarih: <%= moment.duration(Date.now()-komut.tarih).format(" D [gün], H [saat], m [dakika], s [saniye]")%></p>
-      <a href="/komutduzenle/<%= komut.ismi %>" style="text-decoration: none"><i class="fa-solid fa-pen-to-square"></i> Düzenle</a><p></p>
-      <a href="/deletecommand/<%= komut.ismi %>" style="text-decoration: none"><i class="fa-solid fa-ban"></i> Sil</a><p></p>
-    </div>
-</div>
-    <% } %>
-</div>
-<br>    
-<br><div class="buttons">
-<button onclick="location.href='/komutekle'" class="button" style="background-color: #000000;"><i class="fa-solid fa-plus"></i><a style="color:#ffffff;"> Komut ekle</a></button>
-</div>
+        
+        <form action="/ayarlarupdate" method="post"><div class="buttons">
+          <a><i class="fa-solid fa-asterisk"></i> Token </a><input style="width: 25%;" type="text" id="fname" name="token" placeholder="<%= settings.token.slice(0,20) %>**************************************************"><br>
+          <a><i class="fa-solid fa-asterisk"></i> (2ad) Site Token </a><input style="width: 15%;" type="text" id="fname" name="websitetoken" placeholder="<%= settings.websitetoken.slice(0,12) %>********************"><br>
+          <a><i class="fa-solid fa-robot"></i> Botun id'si </a><input style="width: 10%;" type="text" id="fname" name="id" placeholder="<%= settings.id %>"><br>
+          <a><i class="fa-solid fa-crown"></i> Botun sahibinin id'si </a><input style="width: 10%;" type="text" id="fname" name="ownerid" placeholder="<%= settings.ownerid %>"><br>
+          <a><i class="fa-brands fa-autoprefixer"></i> Prefix </a><input style="width: 4%;" type="text" id="fname" name="prefix" placeholder="<%= settings.prefix %>"><br>
+<br><br><input type="submit" class="button" style="background-color: #000000;" value="Güncelle"></div></form>
 <script src="<%=icons%>" crossorigin="anonymous"></script>
+<script>
+  function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+  }
+  
+  function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+  }
+
+  </script>
 <style>
     * {box-sizing: border-box;}
 
-    body {
+    body { 
       height: 100vh;
       cursor: url('icons/cursor.png'), auto;
       background: #181414;
       font-family: Arial, Helvetica, sans-serif;
     }
 
-@keyframes animasyonAdi {
-  10%, 90% {
-    transform: translate3d(-1px, 0, 0);
-  }
-  
-  20%, 80% {
-    transform: translate3d(2px, 0, 0);
-  }
-
-  30%, 50%, 70% {
-    transform: translate3d(-4px, 0, 0);
-  }
-
-  40%, 60% {
-    transform: translate3d(4px, 0, 0);
-  }
+    input[type=text], select {
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-sizing: border-box;
 }
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+.container input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+   .center {
+    font-size:25px;
+    text-align: center;
+    border-radius:15px;
+    border: 3px solid rgb(56, 57, 56);
+   }
+
+   .border {
+    border: 3px solid rgb(56, 57, 56);
+   }
     .header {
       overflow: hidden;
       background-color: #282424;
       padding: 20px 10px;
     }
+    
     .header a {
       float: left;
       color: #ddd;
@@ -171,19 +230,6 @@
           .sidenav {padding-top: 15px;}
           .sidenav a {font-size: 18px;}
         }
-.column {
-  float: left;
-  width: 23%;
-  padding: 16px;
-}
-
-.card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  padding: 1px;
-  border-radius:20px;
-  text-align: center;
-  background-color: #393939;
-}
     </style>
 
 <script>
