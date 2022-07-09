@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SimpleDiscord - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="/icons/websiteload.png" type="image/x-icon" />
+</head>
+<body>
+    <div class="wrapper">
+    </div>
+<div class="header">
+  <a href="/" class="logo">Dangerio Studio</a>
+  <div class="header-right">
+    <a href="/dashboard">Yönetim Paneli</a>
+  </div>
+</div>
+<div style="padding-left:20px">
+  <h1>Botun İstatistikleri</h1>
+  <p><i class="fa-solid fa-users"></i> Kullanıcı sayısı: <%= üye %></p>
+  <p><i class="fa-solid fa-tv"></i> Kanal sayısı: <%= kanal %></p>
+  <p><i class="fa-solid fa-server"></i> Sunucu sayısı: <%= sunucu %></p>
+  <br>
+  <h1>Site İstatistikleri</h1>
+<i class="fa-solid fa-explosion"></i><% if(total <= 20) { %><a>Sistem %<%= total %> </a><i class="fa-solid fa-battery-empty"></i><% } %>
+<% if(total > 20 && total <= 40) { %><a>Sistem %<%= total %> </a><i class="fa-solid fa-battery-quarter"></i><% } %>
+<% if(total > 40 && total <= 60) { %><a>Sistem %<%= total %> </a><i class="fa-solid fa-battery-half"></i><% } %>
+<% if(total > 60 && total <= 80) { %><a>Sistem %<%= total %> </a><i class="fa-solid fa-battery-three-quarters"></i><% } %>
+<% if(total > 80 && total > 99) { %><a>Sistem %<%= total %> </a><i class="fa-solid fa-battery-full"></i><% } %>
+<p><i class="fa-solid fa-tower-broadcast"></i> Ping: <%= ping || 0 %>ms <% if(ping <= 50) { %><i class="fa-solid fa-check"></i><% } %></p>
+<p><i class="fa-solid fa-clock"></i> Uptime: <%= uptime %></p>
+<p><i class="fa-solid fa-memory"></i> Ram: %<%= ram %> <% if(ram <= 85) { %><i class="fa-solid fa-check"></i><% }else{ %> <i class="fa-solid fa-fire-flame-curved"></i> <% } %></p>
+  <p><i class="fa-solid fa-microchip"></i> Cpu: %<%= cpu %> <% if(cpu <= 85) { %><i class="fa-solid fa-check"></i><% }else{ %> <i class="fa-solid fa-fire-flame-curved"></i> <% } %></p>
+</div>
+<br>
+<div class="buttons">
+<button onclick="location.href='/'" class="button" style="background-color: #000000;"><i class="fa-solid fa-arrows-rotate"></i><a style="color:#ffffff;"> Yenile</a></button>
+<button onclick="window.open('<%= botinvite%>')" class="button" style=" background-color: #2b2b2b;"><i class="fa-solid fa-arrow-right-from-bracket"></i><a style="color:#ffffff;"> İnvite</a></button>
+<button onclick="window.open('https://discord.gg/4Xpwwz6pgN')" class="button" style=" background-color: #3a3738;"><a>Discord</a></button>
+</div>
+
+<script src="<%=icons%>" crossorigin="anonymous"></script>
+<style>
+    * {box-sizing: border-box;}
+
+    body { 
+      height: 100vh;
+      cursor: url('icons/cursor.png'), auto;
+      background: #181414;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+   
+    .header {
+      overflow: hidden;
+      background-color: #282424;
+      padding: 20px 10px;
+    }
+    
+    .header a {
+      float: left;
+      color: #ddd;
+      text-align: center;
+      padding: 12px;
+      text-decoration: none;
+      font-size: 18px; 
+      line-height: 25px;
+      border-radius: 4px;
+    }
+    
+    .header a.logo {
+      font-size: 25px;
+      font-weight: bold;
+    }
+  .buttons .button{
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12%;
+  }
+    h1{
+    color: #ddd;
+    }
+    h2{
+    color: #ddd;
+    }
+    h3{
+    color: #ddd;
+    }
+    h4{
+    color: #ddd;
+    }
+    a{
+    color: #ddd;
+    }
+    p{
+    color: #ddd;
+    }
+    i{
+    color: #ddd;
+    }
+    .header a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+    
+    .header-right {
+      float: right;
+    }
+    
+    </style>
+</body>
+</html>

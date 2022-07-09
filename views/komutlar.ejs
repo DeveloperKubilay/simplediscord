@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SimpleDiscord - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="/icons/websiteload.png" type="image/x-icon" />
+</head>
+<body>
+    <div class="wrapper">
+    </div>
+<div class="header">
+    <a href="/" class="logo">Dangerio Studio</a>
+    <span style="color: white; font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menü</span>
+</div>
+        <body>
+        
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="/dashboard"><i class="fa-solid fa-gears"></i> Ana sayfa</a>
+            <a href="/komutekle"><i class="fa-solid fa-file-code"></i> Komut ekle</a>
+            <a href="/komutlar"><i class="fa-solid fa-file-lines"></i> Komutlar</a>
+            <a href="/out"><i class="fa-solid fa-right-from-bracket"></i> Çıkış yap</a>
+        </div>  
+
+<h2><i class="fa-solid fa-code"></i> Komutlar</h2>
+<div class="row">
+    <%
+    for(let i = 0; i < komutlardb.get("komutlar").length; i++) {
+    let komut = komutlardb.get("komutlar")[i];
+  %>      
+  <div class="column">
+    <div class="card">
+      <h3><%= komut.ismi%></h3>
+      <p><i class="fa-solid fa-clock-rotate-left"></i> Tarih: <%= moment.duration(Date.now()-komut.tarih).format(" D [gün], H [saat], m [dakika], s [saniye]")%></p>
+      <a href="/komutduzenle/<%= komut.ismi %>" style="text-decoration: none"><i class="fa-solid fa-pen-to-square"></i> Düzenle</a><p></p>
+      <a href="/deletecommand/<%= komut.ismi %>" style="text-decoration: none"><i class="fa-solid fa-ban"></i> Sil</a><p></p>
+    </div>
+</div>
+    <% } %>
+</div>
+<br>    
+<br><div class="buttons">
+<button onclick="location.href='/komutekle'" class="button" style="background-color: #000000;"><i class="fa-solid fa-plus"></i><a style="color:#ffffff;"> Komut ekle</a></button>
+</div>
+<script src="<%=icons%>" crossorigin="anonymous"></script>
+<style>
+    * {box-sizing: border-box;}
+
+    body {
+      height: 100vh;
+      cursor: url('icons/cursor.png'), auto;
+      background: #181414;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+@keyframes animasyonAdi {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+    .header {
+      overflow: hidden;
+      background-color: #282424;
+      padding: 20px 10px;
+    }
+    .header a {
+      float: left;
+      color: #ddd;
+      text-align: center;
+      padding: 12px;
+      text-decoration: none;
+      font-size: 18px; 
+      line-height: 25px;
+      border-radius: 4px;
+    }
+    
+    .header a.logo {
+        float: right;
+      font-size: 25px;
+      font-weight: bold;
+    }
+  .buttons .button{
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12%;
+  }
+    h1{
+    color: #ddd;
+    }
+    h2{
+    color: #ddd;
+    }
+    h3{
+    color: #ddd;
+    }
+    h4{
+    color: #ddd;
+    }
+    a{
+    color: #ddd;
+    }
+    p{
+    color: #ddd;
+    }
+    i{
+    color: #ddd;
+    }
+    .header a:hover {
+      background-color: #ddd;
+      color: black;
+    }   
+
+        .sidenav {
+          height: 100%;
+          width: 0;
+          position: fixed;
+          z-index: 1;
+          top: 0;
+          left: 0;
+          background-color: #111;
+          overflow-x: hidden;
+          transition: 0.5s;
+          padding-top: 60px;
+        }
+        
+        .sidenav a {
+          padding: 8px 8px 8px 32px;
+          text-decoration: none;
+          font-size: 25px;
+          color: #818181;
+          display: block;
+          transition: 0.3s;
+        }
+        
+        .sidenav a:hover {
+          color: #f1f1f1;
+        }
+        
+        .sidenav .closebtn {
+          position: absolute;
+          top: 0;
+          right: 25px;
+          font-size: 36px;
+          margin-left: 50px;
+        }
+        
+        @media screen and (max-height: 450px) {
+          .sidenav {padding-top: 15px;}
+          .sidenav a {font-size: 18px;}
+        }
+.column {
+  float: left;
+  width: 23%;
+  padding: 16px;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 1px;
+  border-radius:20px;
+  text-align: center;
+  background-color: #393939;
+}
+    </style>
+
+<script>
+    function openNav() {
+      document.getElementById("mySidenav").style.width = "250px";
+    }
+    
+    function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+    }
+    </script>
+</body>
+</html>

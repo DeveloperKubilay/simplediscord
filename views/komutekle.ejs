@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SimpleDiscord - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="/icons/websiteload.png" type="image/x-icon" />
+</head>
+<body>
+    <div class="wrapper">
+    </div>
+<div class="header">
+    <a href="/" class="logo">Dangerio Studio</a>
+    <span style="color: white; font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menü</span>
+</div>
+        <body>
+        
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="/dashboard"><i class="fa-solid fa-gears"></i> Ana sayfa</a>
+            <a href="/komutekle"><i class="fa-solid fa-file-code"></i> Komut ekle</a>
+            <a href="/komutlar"><i class="fa-solid fa-file-lines"></i> Komutlar</a>
+            <a href="/out"><i class="fa-solid fa-right-from-bracket"></i> Çıkış yap</a>
+        </div>   
+        <form action="/komutlarekle" method="post">  <div class="buttons">
+<h2><i class="fa-solid fa-code"></i> Kodun ismi: <input type="text" id="fname" <% if(data != "false") { %>value=<%=data.ismi%> readonly="readonly"<% } %> name="ismi" placeholder="Kodun ismi"></h2>
+<h2><i class="fa-solid fa-circle-nodes"></i> Eylemler</h2>
+<h3><label class="container">Prefix olsunmu<input type="checkbox" <% if(data === "false") {%> checked="checked" <% } %><% if(!data === "false" || data.prefix === true) { %> checked="checked"<% } %> name="prefix" value="true"><span class="checkmark"></span></label></h3>
+<h3><label class="container">Mesaj yanıtlansınmı<input type="checkbox" <% if(data != "false") {%><% if(data.indexjs.includes(`message.reply({`) === true) { %>checked="checked"<% }} %> name="mesajyanıt" value="true"><span class="checkmark"></span></label></h3>
+<h3><label class="container">Mesaj Silinsinmi<input type="checkbox" <% if(data != "false") {%><% if(data.indexjs.includes(`message.delete();`) === true) { %>checked="checked"<% }} %> name="mesajsil" value="true"><span class="checkmark"></span></label></h3>
+<h3><label class="container">Kanal Silinsinmi<input type="checkbox" <% if(data != "false") {%><% if(data.indexjs.includes(`message.channel.delete();`) === true) { %>checked="checked"<% }} %> name="kanalsil" value="true"><span class="checkmark"></span></label></h3>
+
+<h2><i class="fa-solid fa-cube"></i> Embed (zorunlu değil)</h2>
+<h3><i class="fa-solid fa-bars"></i> Embed Rengi</h3>
+
+<label class="container" style="color:white">Siyah<input type="radio" name="embed-renk" <% if(data === "false") {%> checked="checked" <% } %> <% if(data != "false") {%><% if(data.indexjs.includes(`.setColor("`) === false) { %>checked="checked"<% }} %> alue="black" value=""><span class="checkmark"></span></label>
+<label class="container" style="color:white">Beyaz<input type="radio" name="embed-renk" <% if(data != "false") {%><% if(data.indexjs.includes(`.setColor("#ffffff")`) === true) { %>checked="checked"<% }} %> value="#ffffff"><span class="checkmark"></span></label>
+<label class="container" style="color:white">Kırmızı<input type="radio" name="embed-renk" <% if(data != "false") {%><% if(data.indexjs.includes(`.setColor("#ff0000")`) === true) { %>checked="checked"<% }} %> value="#ff0000"><span class="checkmark"></span></label>
+<label class="container" style="color:white">Sarı<input type="radio" name="embed-renk" <% if(data != "false") {%><% if(data.indexjs.includes(`.setColor("#ffff00")`) === true) { %>checked="checked"<% }} %> value="#ffff00"><span class="checkmark"></span></label>
+<label class="container" style="color:white">Yeşil<input type="radio" name="embed-renk" <% if(data != "false") {%><% if(data.indexjs.includes(`.setColor("#008000")`) === true) { %>checked="checked"<% }} %> value="#008000"><span class="checkmark"></span></label>
+
+<a><i class="fa-regular fa-address-card"></i> Resim  </a><input style="width: 25%;" type="text" id="fname" name="embed-resim" <% if(data != "false") {%><% if(data.indexjs.includes(`.setImage("`) === true) { %>value=<%= data.indexjs.split(`.setImage("`)[1].split(`")`)[0] %><% } %><% } %> placeholder="Resmin linki"><br>
+<a><i class="fa-regular fa-address-card"></i> Küçük Resim </a><input style="width: 25%;" type="text" id="fname" name="embed-kücük-resim" <% if(data != "false") {%><% if(data.indexjs.includes(`.setThumbnail("`) === true) { %>value=<%= data.indexjs.split(`.setThumbnail("`)[1].split(`")`)[0] %><% } %><% } %> placeholder="Küçük Resmin linki"><br>
+
+<a><i class="fa-solid fa-a"></i> Başlık </a><input type="text" id="fname" name="embed-başlık" style="width: 25%;"<% if(data != "false") {%><% if(data.indexjs.includes(`.setTitle("`) === true) { %>value=<%= data.indexjs.split("\\n").join("[ALTSATIR]").split(`.setTitle("`)[1].split(`")`)[0] %><% } %><% } %> placeholder="Başlık metni"><br>
+<a><i class="fa-solid fa-notes-medical"></i> Açıklama (Alt satıra gecmek icin [ALTSATIR])</a>
+<input type="text" id="fname" name="embed-aciklama" style="width: 100%;" <% if(data != "false") {%><% if(data.indexjs.includes(`.setDescription("`) === true) { %>value=<%= data.indexjs.split("\\n").join("[ALTSATIR]").split(`.setDescription("`)[1].split(`")]`)[0] %><% } %><% } %> placeholder="Büyük metin">
+
+<h2><i class="fa-solid fa-cube"></i> Mesaj (zorunlu değil)</h2>
+<a><i class="fa-solid fa-notes-medical"></i> Alt satıra gecmek icin [ALTSATIR]</a><br>
+<input type="text" id="fname" name="mesajaga" style="width: 100%;" placeholder="Mesaj"<% if(data != "false") {%><% if(data.indexjs.includes(`content:"`) === true) { %>value=<%= data.indexjs.split("\\n").join("[ALTSATIR]").split(`content:"`)[1].split(`"})`)[0] %><% } %><% } %>>
+<h2><i class="fa-solid fa-bars-staggered"></i> Yazılımsal (zorunlu değil)</h2>
+<a><i class="fa-solid fa-terminal"></i> Modül indirme </a><input type="text" id="fname" name="terminal" style="width: 15%;"placeholder="Modülleri yazın örn(fs ffmpeg)"></a><br>
+<a><i class="fa-solid fa-code-branch"></i> Kod </a><input type="text" id="fname" name="jskodu" style="width: 100%;"<% if(data != "false") {%><% if(data.indexjs.includes(`///javascript`) === true) { %>value=<%= data.indexjs.split(`///javascript`)[1] %><% } %><% } %> placeholder="Js kodu (Boş bırakabilirsiniz)"><br>
+
+<br><br><input type="submit" class="button" style="background-color: #000000;" value="Oluştur">
+</div>
+</form>
+<br>
+<script src="<%=icons%>" crossorigin="anonymous"></script>
+<script>
+  function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+  }
+  
+  function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+  }
+
+  </script>
+<style>
+    * {box-sizing: border-box;}
+
+    body { 
+      height: 100vh;
+      cursor: url('icons/cursor.png'), auto;
+      background: #181414;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    input[type=text], select {
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+.container input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+   .center {
+    font-size:25px;
+    text-align: center;
+    border-radius:15px;
+    border: 3px solid rgb(56, 57, 56);
+   }
+
+   .border {
+    border: 3px solid rgb(56, 57, 56);
+   }
+    .header {
+      overflow: hidden;
+      background-color: #282424;
+      padding: 20px 10px;
+    }
+    
+    .header a {
+      float: left;
+      color: #ddd;
+      text-align: center;
+      padding: 12px;
+      text-decoration: none;
+      font-size: 18px; 
+      line-height: 25px;
+      border-radius: 4px;
+    }
+    
+    .header a.logo {
+        float: right;
+      font-size: 25px;
+      font-weight: bold;
+    }
+  .buttons .button{
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12%;
+  }
+    h1{
+    color: #ddd;
+    }
+    h2{
+    color: #ddd;
+    }
+    h3{
+    color: #ddd;
+    }
+    h4{
+    color: #ddd;
+    }
+    a{
+    color: #ddd;
+    }
+    p{
+    color: #ddd;
+    }
+    i{
+    color: #ddd;
+    }
+    .header a:hover {
+      background-color: #ddd;
+      color: black;
+    }   
+
+        .sidenav {
+          height: 100%;
+          width: 0;
+          position: fixed;
+          z-index: 1;
+          top: 0;
+          left: 0;
+          background-color: #111;
+          overflow-x: hidden;
+          transition: 0.5s;
+          padding-top: 60px;
+        }
+        
+        .sidenav a {
+          padding: 8px 8px 8px 32px;
+          text-decoration: none;
+          font-size: 25px;
+          color: #818181;
+          display: block;
+          transition: 0.3s;
+        }
+        
+        .sidenav a:hover {
+          color: #f1f1f1;
+        }
+        
+        .sidenav .closebtn {
+          position: absolute;
+          top: 0;
+          right: 25px;
+          font-size: 36px;
+          margin-left: 50px;
+        }
+        
+        @media screen and (max-height: 450px) {
+          .sidenav {padding-top: 15px;}
+          .sidenav a {font-size: 18px;}
+        }
+    </style>
+</body>
+</html>
